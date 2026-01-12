@@ -8,17 +8,32 @@
 import SwiftUI
 
 struct MainView: View {
+    // MARK: - Properties
+    
+    // MARK: - Body
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack(alignment: .top) {
+            HeaderView()
+                .zIndex(1)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 19) {
+                    MainViewContentHeader()
+                    
+                    VStack(alignment: .leading, spacing: 19) {
+                        PaymentCardView()
+                    }
+                }
+                .padding(.top, 130)
+            }
         }
-        .padding()
+        .padding(.horizontal, 20)
+        .background(.primaryDark)
     }
 }
 
+
+
+// MARK: - Preview
 #Preview {
     MainView()
 }
