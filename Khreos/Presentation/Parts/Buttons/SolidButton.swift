@@ -14,8 +14,7 @@ struct SolidButton: View {
         } label: {
             Text("Details")
                 .font(.system(size: 12, weight: .light))
-                .padding(.top, 12)
-                .padding(.bottom, 16)
+                .padding(.vertical)
                 .frame(maxWidth: .infinity)
                 .foregroundStyle(.primaryDark)
                 .overlay {

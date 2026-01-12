@@ -26,6 +26,7 @@ struct MainView: View {
                 .padding(.top, 130)
             }
         }
+        .padding(.top, 17)
         .padding(.horizontal, 20)
         .background(.primaryDark)
     }
