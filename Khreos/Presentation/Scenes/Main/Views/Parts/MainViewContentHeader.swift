@@ -37,7 +37,6 @@ struct MainViewContentHeader: View {
                     }
                 }
             }
-            
             HStack(spacing: 4) {
                 Text(399.44.toCurrency())
                     .font(.system(size: 14, weight: .black))

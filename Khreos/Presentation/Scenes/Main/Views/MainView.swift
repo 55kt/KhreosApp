@@ -13,17 +13,20 @@ struct MainView: View {
     // MARK: - Body
     var body: some View {
         ZStack(alignment: .top) {
-            HeaderView()
+            HeaderView(page: HeaderViewContent(totalPrice: 14231, title: "Debt Amount", date: "23 September", pageType: .main)) {}
                 .zIndex(1)
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 19) {
                     MainViewContentHeader()
                     
                     VStack(alignment: .leading, spacing: 19) {
-                        PaymentCardView()
+                        ForEach(0...4, id: \.self) { _ in
+                            PaymentCardView()
+                        }
                     }
                 }
                 .padding(.top, 130)
+                .padding(.bottom, 70)
             }
         }
         .padding(.top, 17)

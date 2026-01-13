@@ -11,7 +11,7 @@ import SwiftUI
 struct KhreosApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            TabBarView()
         }
     }
 }
