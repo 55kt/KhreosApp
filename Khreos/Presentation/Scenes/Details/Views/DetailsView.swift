@@ -78,8 +78,8 @@ struct DetailsView: View {
                 }
                 VStack(alignment: .leading) {
                     Spacer()
-                    FullButton(text: "Close early", textColor: .primaryDark, buttonBackground: .primaryLight)
-                    SolidButton(text: "Remove last payment", textColor: .primaryLight, strokeColor: .primaryLight)
+                    AppButton(text: "Close early", textColor: .primaryDark, buttonBackground: .primaryLight)
+                    AppButton(text: "Remove last payment", textColor: .primaryLight, buttonBackground: Color.clear, strokeColor: .primaryLight)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

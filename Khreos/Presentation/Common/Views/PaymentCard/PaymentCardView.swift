@@ -52,8 +52,12 @@ struct PaymentCardView: View {
             }
             
             HStack(spacing: 4) {
-                FullButton(text: "Pay", textColor: .white, buttonBackground: .primaryDark)
-                SolidButton(text: "Details", textColor: .primaryDark, strokeColor: .primaryDark)
+                AppButton(text: "Pay", textColor: .white, buttonBackground: .primaryDark) {
+                    // Action
+                }
+                AppButton(text: "Details", textColor: .primaryDark, buttonBackground: Color.clear, strokeColor: .primaryDark) {
+                    // Action
+                }
             }
         }
         .padding(.horizontal, 12)
