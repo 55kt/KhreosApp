@@ -9,12 +9,13 @@ import SwiftUI
 
 struct DetailsViewHeader: View {
     // MARK: - Properties
+    var backButtonAction: () -> ()
     
     // MARK: - Body
     var body: some View {
         HStack {
             Button {
-                //
+                backButtonAction()
             } label: {
                 Image(systemName: "chevron.left")
                     .resizable()
@@ -48,5 +49,5 @@ struct DetailsViewHeader: View {
 
 // MARK: - Preview
 #Preview {
-    DetailsViewHeader()
+    DetailsViewHeader() {}
 }

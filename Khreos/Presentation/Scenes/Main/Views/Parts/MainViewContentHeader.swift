@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainViewContentHeader: View {
     // MARK: - Properties
+    @Binding var payType: PayType
     
     // MARK: - Body
     var body: some View {
@@ -22,17 +23,17 @@ struct MainViewContentHeader: View {
                 
                 HStack(spacing: 16) {
                     Button {
-                        //
+                        payType = .monthly
                     } label: {
                         Text("Monthly")
-                            .font(.system(size: 12, weight: .black))
+                            .font(.system(size: 12, weight: payType == .monthly ? .black : .regular))
                             .foregroundStyle(.white)
                     }
                     Button {
-                        //
+                        payType = .oneTime
                     } label: {
                         Text("One-Time")
-                            .font(.system(size: 12, weight: .regular))
+                            .font(.system(size: 12, weight: payType == .oneTime ? .black : .regular))
                             .foregroundStyle(.white)
                     }
                 }
@@ -50,5 +51,5 @@ struct MainViewContentHeader: View {
 
 // MARK: - Preview
 #Preview {
-    MainViewContentHeader()
+    MainViewContentHeader(payType: .constant(.monthly))
 }

@@ -9,18 +9,20 @@ import SwiftUI
 
 struct TabBarView: View {
     // MARK: - Initializer
-    init() {
+    init(path: Binding<NavigationPath>) {
         UITabBar.appearance().isHidden = true
+        self._path = path
     }
     
     // MARK: - Properties
     @State private var selectionPage: TabPage = .main
+    @Binding var path: NavigationPath
     
     // MARK: - Body
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectionPage) {
-                MainView()
+                MainView(path: $path)
                     .tag(TabPage.main)
                 
                 PaymentsView()
@@ -51,5 +53,5 @@ struct TabBarView: View {
 
 // MARK: - Preview
 #Preview {
-    TabBarView()
+    TabBarView(path: .constant(.init()))
 }

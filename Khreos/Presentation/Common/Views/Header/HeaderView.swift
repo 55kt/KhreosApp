@@ -10,7 +10,10 @@ import SwiftUI
 struct HeaderView: View {
     // MARK: - Properties
     var page: HeaderViewContent
+    @Binding var date: Date
     var action: () -> Void
+    
+    @State private var isShowCalendar: Bool = false
     
     // MARK: - Body
     var body: some View {
@@ -49,15 +52,7 @@ struct HeaderView: View {
                     Spacer()
                     
                     if page.pageType == .paymentList {
-                        Button {
-                            action()
-                        } label: {
-                            Image(systemName: "calendar")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 23, height: 23)
-                                .padding(.top, 4)
-                        }
+                        CalendarButton(isShowCalendar: $isShowCalendar, date: $date, buttonType: .paymentsList)
                     }
                 }
                 
@@ -73,5 +68,5 @@ struct HeaderView: View {
 
 // MARK: - Preview
 #Preview {
-    HeaderView(page: .init(totalPrice: 12.444, title: "Payments", date: "23 September", pageType: .paymentList)) {}
+    HeaderView(page: .init(totalPrice: 122.312, title: "Payments", date: "23 December", pageType: .paymentList), date: .constant(.now)) {}
 }

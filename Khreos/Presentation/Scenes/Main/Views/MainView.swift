@@ -9,22 +9,28 @@ import SwiftUI
 
 struct MainView: View {
     // MARK: - Properties
-    @State var isShowAddView: Bool = false
+    @State private var isShowAddView: Bool = false
+    @State private var date: Date = .now
+    @State private var payType: PayType = .monthly
+    @Binding var path: NavigationPath
     
     // MARK: - Body
     var body: some View {
         ZStack(alignment: .top) {
-            HeaderView(page: HeaderViewContent(totalPrice: 14231, title: "Debt Amount", date: "23 September", pageType: .main)) {
+            HeaderView(page: HeaderViewContent(totalPrice: 14231, title: "Debt Amount", date: date.asString, pageType: .main), date: $date) {
                 isShowAddView.toggle()
             }
                 .zIndex(1)
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 19) {
-                    MainViewContentHeader()
+                    MainViewContentHeader(payType: $payType)
                     
                     VStack(alignment: .leading, spacing: 19) {
-                        ForEach(0...4, id: \.self) { _ in
-                            PaymentCardView()
+                        switch payType {
+                        case .monthly:
+                            PaymentCardView(path: $path)
+                        case .oneTime:
+                            Text("One time")
                         }
                     }
                 }
@@ -45,5 +51,5 @@ struct MainView: View {
 
 // MARK: - Preview
 #Preview {
-    MainView()
+    MainView(path: .constant(.init()))
 }

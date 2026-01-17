@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PaymentCardView: View {
     // MARK: - Properties
+    @Binding var path: NavigationPath
     
     // MARK: - Body
     var body: some View {
@@ -56,7 +57,7 @@ struct PaymentCardView: View {
                     // Action
                 }
                 AppButton(text: "Details", textColor: .primaryDark, buttonBackground: Color.clear, strokeColor: .primaryDark) {
-                    // Action
+                    path.append(NavigationPage.details)
                 }
             }
         }
@@ -70,5 +71,5 @@ struct PaymentCardView: View {
 
 // MARK: - Preview
 #Preview {
-    PaymentCardView()
+    PaymentCardView(path: .constant(.init()))
 }

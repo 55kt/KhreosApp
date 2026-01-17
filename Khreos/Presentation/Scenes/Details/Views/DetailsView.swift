@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailsView: View {
     // MARK: - Properties
     @State private var isNotification: Bool = false
+    @Binding var path: NavigationPath
     
     // MARK: - Body
     var body: some View {
@@ -86,7 +87,11 @@ struct DetailsView: View {
             .padding(.horizontal, 20)
             .padding(.top, 70)
             
-            DetailsViewHeader()
+            DetailsViewHeader(backButtonAction: {
+                if !path.isEmpty {
+                    path.removeLast()
+                }
+            })
                 .padding(.horizontal)
                 .zIndex(1)
         }
@@ -96,5 +101,5 @@ struct DetailsView: View {
 
 // MARK: - Preview
 #Preview {
-    DetailsView()
+    DetailsView(path: .constant(.init()))
 }
