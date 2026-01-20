@@ -9,21 +9,15 @@ import SwiftUI
 
 struct AddView: View {
     // MARK: - Properties
-    @State private var nameText: String = ""
-    @State private var isNotification: Bool = false
-    @State private var payType: PayType? = .monthly
-    @State private var date: Date = .now
-    @State private var isShowCalendar: Bool = false
-    @State private var isAdded: Bool = false
+    @StateObject var vm: AddViewModel = Assembly.createAddViewModel()
     @Environment(\.dismiss) private var dismiss
     
-    @State var vm: AddViewModel = Assembly.createAddViewModel()
     // MARK: - Body
     var body: some View {
         NavigationStack {
             // MARK: - Screens Switch - Condition
             Group {
-                if !isAdded {
+                if !vm.isAdded {
                     addViewContent
                 } else {
                     isAddedSuccess
@@ -31,9 +25,8 @@ struct AddView: View {
             }
             // MARK: - Pay Button
             .safeAreaInset(edge: .bottom) {
-                AppButton(text: !isAdded ? "Add Payment" : "Done", textColor: .primaryDark, buttonBackground: .primaryLight) {
-                    vm.createNewPayment()
-                    isAdded ? dismiss() : ()
+                AppButton(text: !vm.isAdded ? "Add Payment" : "Done", textColor: .primaryDark, buttonBackground: .primaryLight) {
+                    !vm.isAdded ? vm.createNewPayment() : dismiss()
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 10)
@@ -57,35 +50,35 @@ extension AddView {
                 VStack(alignment: .leading, spacing: 25) {
                     HStack(spacing: 23) {
                         // MARK: - Pay Type Buttons
-                        AppButton(text: "Every Month", textColor: .primaryLight, buttonBackground: .clear, strokeColor: .primaryLight, type: .monthly, selectedType: $payType) {
+                        AppButton(text: "Every Month", textColor: .primaryLight, buttonBackground: .clear, strokeColor: .primaryLight, type: .monthly, selectedType: $vm.payType) {
                             // Every Month Pay Action
                         }
                         
-                        AppButton(text: "One Time", textColor: .primaryLight, buttonBackground: .clear, strokeColor: .primaryLight, type: .oneTime, selectedType: $payType) {
+                        AppButton(text: "One Time", textColor: .primaryLight, buttonBackground: .clear, strokeColor: .primaryLight, type: .oneTime, selectedType: $vm.payType) {
                             // One Time Pay Action
                         }
                     }
                     // MARK: - Calendar Button
-                    CalendarButton(isShowCalendar: $isShowCalendar, date: $date, buttonType: .addPayment)
+                    CalendarButton(isShowCalendar: $vm.isShowCalendar, date: $vm.date, buttonType: .addPayment)
                 }
                 
                 // MARK: - Fields Area
                 VStack(alignment: .leading, spacing: 12) {
-                    FieldView(placeholder: "Name of payment", text: $nameText)
+                    FieldView(placeholder: "Name of payment", text: $vm.paymentName)
                     
-                    switch payType {
+                    switch vm.payType {
                     case .monthly:
                         HStack(spacing: 20) {
-                            FieldView(placeholder: "Total amount", text: $nameText)
-                            FieldView(placeholder: "Monthly payment", text: $nameText)
+                            FieldView(placeholder: "Total amount", text: $vm.totalAmount, isPriceField: true)
+                            FieldView(placeholder: "Monthly payment", text: $vm.paymentAmount, isPriceField: true)
                         }
                     case .oneTime:
-                        FieldView(placeholder: "Total amount", text: $nameText)
+                        FieldView(placeholder: "Total amount", text: $vm.totalAmount, isPriceField: true)
                     default:
                         EmptyView()
                     }
                     
-                    FieldView(placeholder: "Description", text: $nameText, isTextField: false)
+                    FieldView(placeholder: "Description", text: $vm.descriptionText, isTextField: false)
                     
                     // MARK: - Notification Button
                     HStack {
@@ -96,7 +89,7 @@ extension AddView {
                         
                         Spacer()
                         
-                        RadioButton(isSelected: $isNotification)
+                        RadioButton(isSelected: $vm.isNotification)
                     }
                     .padding(.horizontal, 10)
                 }

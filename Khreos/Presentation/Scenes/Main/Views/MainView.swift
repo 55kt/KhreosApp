@@ -12,6 +12,7 @@ struct MainView: View {
     @State private var isShowAddView: Bool = false
     @State private var date: Date = .now
     @State private var payType: PayType = .monthly
+    @StateObject private var vm = Assembly.createMainViewModel()
     @Binding var path: NavigationPath
     
     // MARK: - Body
@@ -28,9 +29,13 @@ struct MainView: View {
                     VStack(alignment: .leading, spacing: 19) {
                         switch payType {
                         case .monthly:
-                            PaymentCardView(path: $path)
+                            ForEach(vm.payments.filter { $0.type == .monthly }) { item in
+                                PaymentCardView(path: $path, payment: item)
+                            }
                         case .oneTime:
-                            Text("One time")
+                            ForEach(vm.payments.filter { $0.type == .oneTime }) { item in
+                                PaymentCardView(path: $path, payment: item)
+                            }
                         }
                     }
                 }
@@ -43,6 +48,9 @@ struct MainView: View {
         .background(.primaryDark)
         .sheet(isPresented: $isShowAddView) {
             AddView()
+        }
+        .onAppear {
+            vm.fetchPayments()
         }
     }
 }

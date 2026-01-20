@@ -10,6 +10,7 @@ import SwiftUI
 struct PaymentCardView: View {
     // MARK: - Properties
     @Binding var path: NavigationPath
+    var payment: Payment
     
     // MARK: - Body
     var body: some View {
@@ -17,7 +18,7 @@ struct PaymentCardView: View {
             VStack(alignment: .leading, spacing: 5) {
                 VStack(alignment: .leading, spacing: 10) {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Credit card debt")
+                        Text(payment.title)
                             .font(.system(size: 24, weight: .black))
                         HStack(spacing: 5) {
                             Text(415.11.toCurrency())
@@ -32,7 +33,7 @@ struct PaymentCardView: View {
                 
                 HStack {
                     HStack(spacing: 5){
-                        Text(99.toCurrency())
+                        Text(payment.paymentAmount.toCurrency())
                             .font(.system(size: 18, weight: .black))
                         Text("/ Mounth")
                             .font(.system(size: 18, weight: .regular))
@@ -41,7 +42,7 @@ struct PaymentCardView: View {
                     HStack(spacing: 5) {
                         Text("Pay before")
                             .font(.system(size: 12, weight: .light))
-                        Text("21.12")
+                        Text("\(payment.dueDay ?? 0)")
                             .font(.system(size: 12, weight: .black))
                     }
                     .padding(.horizontal, 11)
@@ -71,5 +72,5 @@ struct PaymentCardView: View {
 
 // MARK: - Preview
 #Preview {
-    PaymentCardView(path: .constant(.init()))
+    PaymentCardView(path: .constant(.init()), payment: Payment(id: "", type: .monthly, title: "Title", description: "Description", paymentAmount: 2206, totalAmount: 2309, isNotificationEnabled: true, createdAt: Date.now))
 }

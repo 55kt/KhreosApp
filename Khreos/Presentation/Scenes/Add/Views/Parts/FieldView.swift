@@ -12,6 +12,7 @@ struct FieldView: View {
     var placeholder: String
     @Binding var text: String
     var isTextField: Bool = true
+    var isPriceField: Bool = false
     @FocusState private var isFocused: Bool
     
     // MARK: - Body
@@ -26,6 +27,7 @@ struct FieldView: View {
                     .padding(.horizontal, 10)
                     .background(.offWhite)
                     .clipShape(Capsule())
+                    .keyboardType(isPriceField ? .decimalPad : .default)
                     .overlay {
                         Capsule()
                             .stroke(.primaryLight, lineWidth: 2)
